@@ -1,6 +1,6 @@
 # Sernel
 
-Kernel methods in Scala. At first to learn, but who knows ?
+Kernel methods in Scala, to learn, at the moment.
 
 # To Do
 
