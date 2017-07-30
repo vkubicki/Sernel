@@ -9,7 +9,7 @@ import breeze.optimize._
  * - https://github.com/scalanlp/breeze/blob/master/math/src/test/scala/breeze/optimize/LBFGSTest.scala
  * */
 
-object Regression {
+object Estimation {
   /**
    * Using closure, generate a Quadratic error computation, as a function. Note how the Representer Theorem allows for
    * a finite space optimization. See optimizationTest for a concise example of the optimizer usage.
