@@ -1,3 +1,3 @@
 object Main extends App {
-  Regression.optimizationTest
+  regression.Data.oneDimFunctionTest
 }

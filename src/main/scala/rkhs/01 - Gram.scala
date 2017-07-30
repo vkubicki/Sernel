@@ -1,3 +1,5 @@
+package rkhs
+
 import breeze.linalg._
 
 object Gram {

@@ -1,3 +1,5 @@
+package regression
+
 import breeze.linalg._
 import breeze.optimize._
 

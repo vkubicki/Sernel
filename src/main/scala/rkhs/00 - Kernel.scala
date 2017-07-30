@@ -1,3 +1,5 @@
+package rkhs
+
 import breeze.linalg._
 
 /**
