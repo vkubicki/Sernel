@@ -24,9 +24,7 @@ object Regression {
     /**
      * @param a vector of coefficient
      * */
-    def f(a: DenseVector[Double]): Double = (0 to nObs - 1)
-      .map(i => math.pow(a dot gram(::, i) - y(i), 2))
-      .sum
+    def f(a: DenseVector[Double]): Double = sum(DenseVector.tabulate[Double](nObs)(i => math.pow(a.dot(gram(::, i)) - y(i), 2)))
 
     return f
   }
@@ -65,7 +63,7 @@ object Regression {
   def optimizationTest {
     val lbfgs = new LBFGS[DenseVector[Double]](100, 4)
     
-    val init = DenseVector[Double]() // to be filled with initialize position
+    val init = DenseVector.fill[Double](100)(0.0) // to be filled with initialize position
 
     val fOrg = new DiffFunction[DenseVector[Double]] { // original code found in the example
       def calculate(x: DenseVector[Double]) = {

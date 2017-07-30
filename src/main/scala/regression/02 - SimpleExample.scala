@@ -25,13 +25,7 @@ object SimpleExample {
     
     val gram = Gram.generate(xLearn, kernel)
     
-    println("gram")
-    println(gram)
-    
     val coefficients = Regression.estimateCoefficient(gram, yLearn)
-    
-    println("coefficients")
-    println(coefficients)
     
     val yPredict = Predict.evaluateMinimize(
         xPredict,
