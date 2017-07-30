@@ -39,12 +39,8 @@ object Data {
     }
     
     val uni = new Uniform(min, max)
-    
-    val xSeq = uni
-      .sample(nPoints)
-      .sorted
       
-    val x = DenseVector(xSeq:_*)
+    val x = DenseVector.rand[Double](nPoints, uni)
     
     val gauss = new Gaussian(0.0, sd)
       
@@ -66,6 +62,6 @@ object Data {
     
     val fig = Figure()
     val plt = fig.subplot(0)
-    plt += plot(x, y)
+    plt += plot(x, y, '.')
   }
 }
