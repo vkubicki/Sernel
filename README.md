@@ -6,8 +6,6 @@ Kernel methods in Scala, to learn, at the moment. The current objective is to fi
 
 ## Short term
 
-- Implement kernel regression, because it contains a lot of basic ideas about RKHS, kernel and the use of the Representer Theorem
-
 ## Medium term
 
 - Gram matrix symmetry should be exploited to reduce computation times
@@ -22,6 +20,9 @@ Kernel methods in Scala, to learn, at the moment. The current objective is to fi
 - Use the existing framework to implement other kernel methods:
     - k-means
     - SVM
+    - kernel embeddings: https://en.wikipedia.org/wiki/Kernel_embedding_of_distributions
+        - kernel two-sample test: http://jmlr.org/papers/volume13/gretton12a/gretton12a.pdf
+- Create new kernels from addition, product of kernels, to support heterogeneous multivariate data automatically
 - Automate the choice of kernel using an error function to be minimized
     - the error function should be provided as a parameter
     - the kernels could be provided as a list of kernels
