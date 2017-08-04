@@ -1,9 +1,9 @@
-package regression
+package p01regression
 
 import breeze.linalg._
 import breeze.plot._
 import breeze.stats.distributions._
-import rkhs.{Gram, Kernel, Predict}
+import p00rkhs.{Gram, Kernel, Predict}
 
 object SimpleExample {
   def main {

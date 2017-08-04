@@ -1,4 +1,4 @@
-package rkhs
+package p00rkhs
 
 import breeze.linalg._
 

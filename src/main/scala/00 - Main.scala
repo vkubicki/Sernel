@@ -1,4 +1,4 @@
 object Main extends App {
 //  regression.Data.oneDimFunctionTest
-  regression.SimpleExample.main
+  p01regression.SimpleExample.main
 }
