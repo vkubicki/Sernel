@@ -2,6 +2,12 @@
 
 Kernel methods in Scala, to learn, at the moment. The current objective is to find the best way to factorize as much code as possible among the various methods that use RKHS.
 
+# How to use
+
+The easiest way to start is to use Eclipse:
+- A ".project" file is provided for easy import.
+- Sbt files are provided so that after an "sbt eclipse" everything will run smoothly.
+
 # To Do
 
 ## Short term
