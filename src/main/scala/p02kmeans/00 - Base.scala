@@ -23,14 +23,7 @@ object Base {
       val gram: DenseMatrix[Double],
       val param: DenseMatrix[Double],
       val zik: DenseMatrix[Double])
-      
-  def main {
-    // compute Gram matrix, using Gram.generate
-    // initialize algorithm by selecting a representative element per class and setting the class centers using them
-    // launch the real computation, which alternates E and M steps, updating the computation state
-    // the computation state contains all the information about the solution: the position of the class centers as weel as the class labels
-  }
-  
+        
   /**
    * ||K_x_i - C_k||^2 = ||K_x_i||^2 + ||C_k||^2 - 2 <K_x_i, C_k>
    * C_k = \sum_j a_{j, k} K_x_j, and this decomposition will be used multiple times here
