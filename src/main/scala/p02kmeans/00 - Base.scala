@@ -1,6 +1,7 @@
 package p02kmeans
 
 import breeze.linalg._
+import p00rkhs.Gram
 
 /**
  */
@@ -32,21 +33,32 @@ object Base {
   
   /**
    * ||K_x_i - C_k||^2 = ||K_x_i||^2 + ||C_k||^2 - 2 <K_x_i, C_k>
-   * C_k = \sum_j a_{k, j} K_x_j, and this decomposition will be used multiple times here
+   * C_k = \sum_j a_{j, k} K_x_j, and this decomposition will be used multiple times here
    * ||K_x_i||^2 = <K_x_i, K_x_i> which is a diagonal element of the Gram matrix
    * ||C_k||^2 can be computed and reused multiple times. Since (K_x_1, ..., K_x_n) are not orthogonal, ||C_k||^2 can not be expressed using only <K_x_i, K_x_i> elements.
-   * <K_x_i, C_k> = \sum_j a_{k, j} <K_x_i, K_x_j> where a_{k, j} is the corresponding element of initialState.param
-   * \sum_j a_{k, j} <K_x_i, K_x_j> is the scalar product between a row of initialState.param and the row corresponding to i in the Gram matrix
+   * <K_x_i, C_k> = \sum_j a_{j, k} <K_x_i, K_x_j> where a_{j, k} is the corresponding element of initialState.param
+   * \sum_j a_{j, k} <K_x_i, K_x_j> is the scalar product between a row of initialState.param and the row corresponding to i in the Gram matrix
    * 
    * Is it the same to directly compute K_x_i - C_k in the (K_x_1, ..., K_x_n) basis and compute the scalar product with itself ?
    * Yes, but bilinearity of scalar product means there are n^2 terms to compute for each of the n observation (n^3 in total), most of them null because K_x_i is sparse in (K_x_1, ..., K_x_n) basis
    * This could easily be tested numerically...
    * */
   def eStep(initialState: ComputationState): ComputationState = {
-    // ||K_x_i - C_k ||
-    // compute the norm of each center of class (each column of param) as it is a term used multiple times in the computation of the distance
+    val nObs = initialState.zik.rows
+    val nClass = initialState.zik.cols
     
-    // compute distance in matrix dik
+    val squaredNormCk = initialState
+      .param(::, *)
+      .map(c => Gram.scalarProduct(initialState.gram, c, c)) // compute the norm of each center of class (each column of param) as it is a term used multiple times in the computation of the distance
+    
+    val dik = DenseMatrix.tabulate[Double](nObs, nClass)(
+        (i, k) => initialState.gram(i, i) // element {i, k} of dik is ||K_x_i - C_k||^2
+        + squaredNormCk(k)
+        - 2.0 * Gram.scalarProduct(
+            initialState.gram,
+            initialState.param(::, k),
+            initialState.gram(::, i)))
+            
     // line by line, find the min, get the row index
     // create new zik matrix where, for each column, the 
     return new ComputationState(
