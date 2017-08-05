@@ -6,4 +6,6 @@ This document summarizes the experience of doign numerical computations in Scala
 
 # Pro
 
+- Once the code is written and compiles, it is highly likely to be correct and show a minimum of runtime bugs
+
 # Cons

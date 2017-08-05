@@ -3,8 +3,6 @@ package p02kmeans
 import breeze.linalg._
 import p00rkhs.Gram
 
-/**
- */
 object Base {
   /**
    * Evolution of the computation, updated across iterations.
@@ -75,4 +73,15 @@ object Base {
   }
   
   def emIteration(initialState: ComputationState): ComputationState = mStep(eStep(initialState))
+  
+  /**
+   * Initialization of params, one element is chosen randomly to represent each class.
+   */
+  def init(nObs: Int, nClass: Int): DenseMatrix[Double] = {
+    val rand = new scala.util.Random()
+    val rep = rand.shuffle(0 to nObs - 1).take(nClass).toArray // this ensures that no individual represents two classes
+    val res = DenseMatrix.tabulate[Double](nObs, nClass)((i, k) => if (i == rep(k)) 1.0 else 0.0)
+    
+    return res
+  }
 }

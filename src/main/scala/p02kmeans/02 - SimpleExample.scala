@@ -2,27 +2,42 @@ package p02kmeans
 
 import breeze.linalg._
 import p00rkhs.{Gram, Kernel}
+import p02kmeans.Base.ComputationState
 
 object SimpleExample {
   def main {
     val proportion = DenseVector[Double](0.2, 0.8)
-    val param = Vector(
-        Vector(
+    val paramGenerator = Array(
+        Array(
             new Data.GaussianClassParam(0.0, 1.0),
             new Data.GaussianClassParam(10.0, 1.0)),
-        Vector(
+        Array(
             new Data.GaussianClassParam(0.0, 1.0),
             new Data.GaussianClassParam(10.0, 1.0)))
     val nObs = 10
+    val nClass = 2
+    
+    val nIteration = 10
     
     val data = Data.gaussianMixture(
       proportion,
-      param,
+      paramGenerator,
       nObs)
       
-    val gram = Gram.generate(data, Kernel.linear) // compute Gram matrix
-    // initialize algorithm by selecting a representative element per class and setting the class centers using them
-    // launch the real computation, which alternates E and M steps, updating the computation state
-    // the computation state contains all the information about the solution: the position of the class centers as weel as the class labels
+    val gram = Gram.generate(data.data, Kernel.linear) // compute Gram matrix
+    val param = Base.init(nObs, nClass) // initialize the algorithm by selecting a representative element per class and setting the class centers using them
+    val zeroCompState = new ComputationState(
+        gram,
+        param,
+        DenseMatrix.zeros[Double](nObs, nClass))
+    val initCompState = Base.eStep(zeroCompState) // an e step is performed, so that the ComputationState is valid
+    
+    val res = Stream // launch the real computation, which alternates E and M steps, updating the computation state
+      .iterate(initCompState)(Base.emIteration)
+      .take(nIteration)
+      .last 
+      
+    println(res.zik)
+    println(data.zi)
   }
 }

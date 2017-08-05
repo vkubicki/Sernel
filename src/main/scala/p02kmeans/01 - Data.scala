@@ -11,6 +11,10 @@ object Data {
       val mean: Double,
       val sd: Double)
   
+  class GaussianGeneratedData (
+      val data: DenseVector[DenseVector[Double]],
+      val zi: DenseVector[Int])
+      
   /**
    * Gaussian Mixture Model is simple to write. It is a good candidate to generate data
    * for a k-means algorithm. More "distorted" data will be generated with other methods
@@ -23,9 +27,9 @@ object Data {
    */
   def gaussianMixture(
       proportion: DenseVector[Double],
-      param: Vector[Vector[GaussianClassParam]],
+      param: Array[Array[GaussianClassParam]],
       nObs: Int)
-  : DenseVector[DenseVector[Double]] = {
+  : GaussianGeneratedData = {
     val nVar = param.size
     val multiSampler = Multinomial(proportion) // sampler for the latent class
     val varSamplerVec = param.map(v => v.map(c => Gaussian(c.mean, c.sd)))
@@ -33,16 +37,16 @@ object Data {
 
     val data = zi.map(k => DenseVector.tabulate[Double](nVar)(j => varSamplerVec(j)(k).sample))
     
-    return data
+    return new GaussianGeneratedData(data, zi)
   }
   
   def gaussianMixtureTest {
     val proportion = DenseVector[Double](0.2, 0.8)
-    val param = Vector(
-        Vector(
+    val param = Array(
+        Array(
             new GaussianClassParam(0.0, 1.0),
             new GaussianClassParam(10.0, 1.0)),
-        Vector(
+        Array(
             new GaussianClassParam(0.0, 1.0),
             new GaussianClassParam(10.0, 1.0)))
     val nObs = 10
@@ -52,6 +56,6 @@ object Data {
       param,
       nObs)
       
-    data.foreach(println)
+    data.data.foreach(println)
   }
 }
