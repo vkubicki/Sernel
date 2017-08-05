@@ -33,4 +33,23 @@ object Data {
     
     return data
   }
+  
+  def gaussianMixtureTest {
+    val proportion = DenseVector[Double](0.2, 0.8)
+    val param = Vector(
+        Vector(
+            new GaussianClassParam(0.0, 1.0),
+            new GaussianClassParam(10.0, 1.0)),
+        Vector(
+            new GaussianClassParam(0.0, 1.0),
+            new GaussianClassParam(10.0, 1.0)))
+    val nObs = 10
+    
+    val data = gaussianMixture(
+      proportion,
+      param,
+      nObs)
+      
+    println(data)
+  }
 }
