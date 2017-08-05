@@ -59,20 +59,26 @@ object Base {
             initialState.param(::, k),
             initialState.gram(::, i)))
             
-    // line by line, find the min, get the row index
-    // create new zik matrix where, for each column, the 
-    return new ComputationState(
-        DenseMatrix.zeros[Double](3, 3),
-        DenseMatrix.zeros[Double](3, 3),
-        DenseMatrix.zeros[Double](3, 3))
+    val minLoc = dik(*, ::).map(r => argmin(r)) // line by line, find the min, get the column index
+    
+    val zik = DenseMatrix.tabulate[Double](nObs, nClass)((i, k) => if (minLoc(i) == k) 1.0 else 0.0)
+
+    return new ComputationState( // create new zik matrix with 1 at each min, and 0 everywhere else
+        initialState.gram,
+        initialState.param,
+        zik)
   }
   
   def mStep(initialState: ComputationState): ComputationState = {
-    // take the zik matrix, and normalize each column to get param
+    val nObs = initialState.zik.rows
+    val nClass = initialState.zik.cols
+    
+    val colSum = initialState.zik(::, *).map(c => sum(c)) // zik compute columns sum
+    val param = DenseMatrix.tabulate[Double](nObs, nClass)((i, k) => initialState.zik(i, k) / colSum(k)) // take the zik matrix, and normalize each column to get param
     return new ComputationState(
-        DenseMatrix.zeros[Double](3, 3),
-        DenseMatrix.zeros[Double](3, 3),
-        DenseMatrix.zeros[Double](3, 3))
+        initialState.gram,
+        param,
+        initialState.zik)
   }
   
   def emIteration(initialState: ComputationState): ComputationState = mStep(eStep(initialState))
