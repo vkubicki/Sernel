@@ -12,7 +12,9 @@ object Data {
       val sd: Double)
   
   /**
-   * Gaussian Mixture Model is a 
+   * Gaussian Mixture Model is simple to write. It is a good candidate to generate data
+   * for a k-means algorithm. More "distorted" data will be generated with other methods
+   * to test the performance of various kernels.
    * 
    * @param proportion marginal probability for each label
    * @param param param[j][k] returns the GaussianClassParam for the k class of the j variable
@@ -23,13 +25,13 @@ object Data {
       proportion: DenseVector[Double],
       param: Vector[Vector[GaussianClassParam]],
       nObs: Int)
-  : DenseMatrix[Double] = {
+  : DenseVector[DenseVector[Double]] = {
     val nVar = param.size
     val multiSampler = Multinomial(proportion) // sampler for the latent class
     val varSamplerVec = param.map(v => v.map(c => Gaussian(c.mean, c.sd)))
     val zi = DenseVector.fill[Int](nObs)(multiSampler.sample)
 
-    val data = DenseMatrix.tabulate[Double](nObs, nVar)((i, j) => varSamplerVec(j)(zi(i)).sample)
+    val data = zi.map(k => DenseVector.tabulate[Double](nVar)(j => varSamplerVec(j)(k).sample))
     
     return data
   }
@@ -50,6 +52,6 @@ object Data {
       param,
       nObs)
       
-    println(data)
+    data.foreach(println)
   }
 }

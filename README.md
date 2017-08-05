@@ -8,9 +8,9 @@ The easiest way to start is to use Eclipse:
 - A ".project" file is provided for easy import.
 - Sbt files are provided so that after an "sbt eclipse" everything will run smoothly.
 - Scala IDE
-    - note that the eclipse marketplace update site for Scala-IDE is http://download.scala-ide.org/sdk/lithium/e44/scala211/stable/site, but the version is old 4.2
+    - the eclipse marketplace update site for Scala-IDE is http://download.scala-ide.org/sdk/lithium/e44/scala211/stable/site, but the version is old 4.2
     - Scala IDE provides this site: http://download.scala-ide.org/sdk/lithium/e46/scala212/stable/site
-    - The link to the latest update site is provided here: http://scala-ide.org/download/current.html
+    - the link to the latest update site is provided here: http://scala-ide.org/download/current.html
     - note that e46 refers to the eclipse version
 - When compiling, some errors can not be corrected. They are:
     - Error in Scala compiler: assertion failed: List(method apply$mcI$sp, method apply$mcI$sp)
