@@ -6,6 +6,7 @@ This document summarizes the experience of doign numerical computations in Scala
 
 # Pro
 
+- Once the code is written and compiles, it is highly likely to be correct and show a minimum of runtime bugs
 - Using constructs like map and reduce make the algorithm easy to scale using Spark for example
 - Immutability removes a lot of errors, like use of uninitialized variables
 - strong typing allows to avoid errors like using the entire vector instead of a particular vector element

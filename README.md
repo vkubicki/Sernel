@@ -7,10 +7,21 @@ Kernel methods in Scala, to learn, at the moment. The current objective is to fi
 The easiest way to start is to use Eclipse:
 - A ".project" file is provided for easy import.
 - Sbt files are provided so that after an "sbt eclipse" everything will run smoothly.
+- Scala IDE
+    - the eclipse marketplace update site for Scala-IDE is http://download.scala-ide.org/sdk/lithium/e44/scala211/stable/site, but the version is old 4.2
+    - Scala IDE provides this site: http://download.scala-ide.org/sdk/lithium/e46/scala212/stable/site
+    - the link to the latest update site is provided here: http://scala-ide.org/download/current.html
+    - note that e46 refers to the eclipse version
+- When compiling, some errors can not be corrected. They are:
+    - Error in Scala compiler: assertion failed: List(method apply$mcI$sp, method apply$mcI$sp)
+    - SBT builder crashed while compiling. The error message is 'assertion failed: List(method apply$mcI$sp, method apply$mcI$sp)'. Check Error Log for details.
+    - If you encouter them, the only way for know to bypass the compilation error is to clean the project.
 
 # To Do
 
 ## Short term
+
+- In the kernel kmeans, take should not be used, as this might imply saving the results of the first iterations. Should drop and next be used instead ?
 
 ## Medium term
 

@@ -3,8 +3,6 @@ package p02kmeans
 import breeze.linalg._
 import p00rkhs.Gram
 
-/**
- */
 object Base {
   /**
    * Evolution of the computation, updated across iterations.
@@ -23,14 +21,7 @@ object Base {
       val gram: DenseMatrix[Double],
       val param: DenseMatrix[Double],
       val zik: DenseMatrix[Double])
-      
-  def main {
-    // compute Gram matrix, using Gram.generate
-    // initialize algorithm by selecting a representative element per class and setting the class centers using them
-    // launch the real computation, which alternates E and M steps, updating the computation state
-    // the computation state contains all the information about the solution: the position of the class centers as weel as the class labels
-  }
-  
+        
   /**
    * ||K_x_i - C_k||^2 = ||K_x_i||^2 + ||C_k||^2 - 2 <K_x_i, C_k>
    * C_k = \sum_j a_{j, k} K_x_j, and this decomposition will be used multiple times here
@@ -82,4 +73,15 @@ object Base {
   }
   
   def emIteration(initialState: ComputationState): ComputationState = mStep(eStep(initialState))
+  
+  /**
+   * Initialization of params, one element is chosen randomly to represent each class.
+   */
+  def init(nObs: Int, nClass: Int): DenseMatrix[Double] = {
+    val rand = new scala.util.Random()
+    val rep = rand.shuffle(0 to nObs - 1).take(nClass).toArray // this ensures that no individual represents two classes
+    val res = DenseMatrix.tabulate[Double](nObs, nClass)((i, k) => if (i == rep(k)) 1.0 else 0.0)
+    
+    return res
+  }
 }
