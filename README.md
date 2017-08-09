@@ -21,6 +21,8 @@ The easiest way to start is to use Eclipse:
 
 ## Short term
 
+- In the kernel kmeans, take should not be used, as this might imply saving the results of the first iterations. Should drop and next be used instead ?
+
 ## Medium term
 
 - Gram matrix symmetry should be exploited to reduce computation times
