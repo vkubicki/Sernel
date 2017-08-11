@@ -12,10 +12,6 @@ The easiest way to start is to use Eclipse:
     - Scala IDE provides this site: http://download.scala-ide.org/sdk/lithium/e46/scala212/stable/site
     - the link to the latest update site is provided here: http://scala-ide.org/download/current.html
     - note that e46 refers to the eclipse version
-- When compiling, some errors can not be corrected. They are:
-    - Error in Scala compiler: assertion failed: List(method apply$mcI$sp, method apply$mcI$sp)
-    - SBT builder crashed while compiling. The error message is 'assertion failed: List(method apply$mcI$sp, method apply$mcI$sp)'. Check Error Log for details.
-    - If you encouter them, the only way for know to bypass the compilation error is to clean the project.
 
 # To Do
 
@@ -45,5 +41,3 @@ The easiest way to start is to use Eclipse:
     - the kernels could be provided as a list of kernels
 
 # Bugs
-
-- "WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS" on Windows

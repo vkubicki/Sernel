@@ -6,7 +6,7 @@ import p02kmeans.Base.ComputationState
 
 object SimpleExample {
   def main {
-    val proportion = DenseVector[Double](0.2, 0.8)
+    val proportion = DenseVector[Double](0.3, 0.7)
     val paramGenerator = Array(
         Array(
             new Data.GaussianClassParam(0.0, 1.0),
