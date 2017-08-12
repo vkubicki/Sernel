@@ -11,13 +11,13 @@ object Base {
    * matrix contains all the relevant information. This simplifies the algorithm and help
    * factorize it over multiple data types.
    * 
-   * @param obsLearning 
+   * @param nIteration number of iterations previously carried out
    * @param gram Gram matrix for the observed data
-   * @param squaredNorm squared norm of each column vector of the Gram matrix
-   * @param center of classes, expressed in the data learning
+   * @param param position of center param(i, k) indicates the coefficients of the center k
    * @param zik contains 1 if observation i belong to class k, 0 otherwise
    */
   class ComputationState (
+      val nIteration: Int,
       val gram: DenseMatrix[Double],
       val param: DenseMatrix[Double],
       val zik: DenseMatrix[Double])
@@ -55,6 +55,7 @@ object Base {
     val zik = DenseMatrix.tabulate[Double](nObs, nClass)((i, k) => if (minLoc(i) == k) 1.0 else 0.0)
 
     return new ComputationState( // create new zik matrix with 1 at each min, and 0 everywhere else
+        initialState.nIteration,
         initialState.gram,
         initialState.param,
         zik)
@@ -67,12 +68,20 @@ object Base {
     val colSum = initialState.zik(::, *).map(c => sum(c)) // zik compute columns sum
     val param = DenseMatrix.tabulate[Double](nObs, nClass)((i, k) => initialState.zik(i, k) / colSum(k)) // take the zik matrix, and normalize each column to get param
     return new ComputationState(
+        initialState.nIteration,
         initialState.gram,
         param,
         initialState.zik)
   }
   
-  def emIteration(initialState: ComputationState): ComputationState = mStep(eStep(initialState))
+  def emIteration(initialState: ComputationState): ComputationState = {
+    val emRes = mStep(eStep(initialState))
+    return new ComputationState(
+        emRes.nIteration + 1,
+        emRes.gram,
+        emRes.param,
+        emRes.zik)
+  }
   
   /**
    * Initialization of params, one element is chosen randomly to represent each class.

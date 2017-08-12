@@ -34,9 +34,6 @@ object Base {
     return mmdSample((nSample.toDouble * (1.0 - alpha)).toInt)
   }
   
-  /**
-   * Tuples are not easy to read. This return class is more convenient.
-   * */
   class Partition(val sampleA: Array[Int], val sampleB: Array[Int]) {
     override def toString = s"sampleA: $sampleA" + Def.eol + s"sampleB: $sampleB"
   }
@@ -52,7 +49,6 @@ object Base {
   /**
    * Unbiased estimator of the MMD
    * http://www.shogun-toolbox.org/notebook/latest/mmd_two_sample_testing.html#Quadratic-Time-MMD
-   * Note that the expression of the biased estimator would yield a slighty more simple computation
    */
   def mmdUnbiasedEstimator(gram: DenseMatrix[Double], part: Partition): Double = {
     val m = part.sampleA.length

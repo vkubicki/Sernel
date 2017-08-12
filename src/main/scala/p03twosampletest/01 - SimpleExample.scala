@@ -32,7 +32,7 @@ object SimpleExample {
    * */
   def generateData(nA: Int, nB: Int): DenseVector[Double] = {    
     val distA = new Gaussian(0.0, 1.0)
-    val distB = new Gaussian(0.0, 1.0)
+    val distB = new Gaussian(1.0, 1.0)
     
     DenseVector.tabulate[Double](nA + nB)(i => if (i < nA) distA.sample else distB.sample)
   }
