@@ -15,10 +15,10 @@ object SimpleExample {
         Array(
             new Data.GaussianClassParam(0.0, 1.0),
             new Data.GaussianClassParam(10.0, 1.0)))
-    val nObs = 10
+    val nObs = 100
     val nClass = 2
     
-    val nIteration = 1
+    val nIteration = 100
     
     val data = Data.gaussianMixture(
       proportion,
@@ -43,8 +43,14 @@ object SimpleExample {
         initCompState,
         Base.emIteration,
         (s: ComputationState) => s.nIteration == nIteration)
-      
-    println(res.zik)
-    println(data.zi)
+    
+    val ziComputed = DenseVector.tabulate[Int](nObs)(i => argmax(res.zik(i, ::)))
+//    val confusionMatrix = DenseMatrix.tabulate[Double](nClass, nClass)((i, j) => {
+//      if ()
+//    })
+    
+//    println(correctRate)
+    println(res.zik(0 to 9, ::))
+    println(data.zi(0 to 9))
   }
 }
