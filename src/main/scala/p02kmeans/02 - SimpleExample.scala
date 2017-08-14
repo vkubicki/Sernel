@@ -34,23 +34,34 @@ object SimpleExample {
         DenseMatrix.zeros[Double](nObs, nClass))
     val initCompState = Base.eStep(zeroCompState) // an e step is performed, so that the ComputationState is valid
     
-//    val res = Stream // launch the real computation, which alternates E and M steps, updating the computation state
-//      .iterate(initCompState)(Base.emIteration)
-//      .take(nIteration)
-//      .last
-    
     val res = Iterate.iterate( // launch the real computation, which alternates E and M steps, updating the computation state
         initCompState,
         Base.emIteration,
         (s: ComputationState) => s.nIteration == nIteration)
     
     val ziComputed = DenseVector.tabulate[Int](nObs)(i => argmax(res.zik(i, ::)))
-//    val confusionMatrix = DenseMatrix.tabulate[Double](nClass, nClass)((i, j) => {
-//      if ()
-//    })
+    val matConf = computeMatConf(nClass, data.zi, ziComputed)
     
-//    println(correctRate)
-    println(res.zik(0 to 9, ::))
-    println(data.zi(0 to 9))
+    println(matConf)
+  }
+  
+  /**
+   * It would be possible to provide an immutable implementation of this function. But it would be cumbersome and
+   * would run in log(n). One possible implementation would use a scala Vector which is updated un a fold for example.
+   * 
+   * I use a for loop because a DenseVector does not provide the zip method (unlike an Array for example. */
+  def computeMatConf(
+      nClass: Int,
+      realClass: DenseVector[Int],
+      predictedClass: DenseVector[Int])
+  : DenseMatrix[Int] = {
+    val nObs = realClass.length
+    val matConf = DenseMatrix.zeros[Int](nClass, nClass)
+    
+    for (i <- 0 to nObs - 1) {
+      matConf(realClass(i), predictedClass(i)) += 1
+    }
+    
+    return matConf
   }
 }
