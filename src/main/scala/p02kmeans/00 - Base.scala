@@ -49,7 +49,7 @@ object Base {
             initialState.gram,
             initialState.param(::, k),
             initialState.gram(::, i)))
-            
+    
     val minLoc = dik(*, ::).map(r => argmin(r)) // line by line, find the min, get the column index
     
     val zik = DenseMatrix.tabulate[Double](nObs, nClass)((i, k) => if (minLoc(i) == k) 1.0 else 0.0)
@@ -59,6 +59,30 @@ object Base {
         initialState.gram,
         initialState.param,
         zik)
+  }
+  
+  /**
+   * Similar to eStep, except that the prediction is made for a single observation which
+   * was not part of the learning sample. This means that the gram matrix can not be used,
+   * and the kernel has to be called. This pattern is often seen in prediction. This is similar
+   * to what happens in p01regression when the regression has to be called at some random sample points.
+   * */
+  def predict(
+		  kernel: (DenseVector[Double], DenseVector[Double]) => Double,
+      param: DenseMatrix[Double],
+      squaredNormCk: DenseVector[Double],
+      learnObs: DenseVector[DenseVector[Double]],
+      obs: DenseVector[Double])
+  : Int = {
+    val nClass = param.cols
+    val nObsLearning = param.rows
+    
+    val dk = DenseVector.tabulate[Double](nClass)(k =>
+      math.pow(kernel(obs, obs), 2) // element {i, k} of dik is ||K_x_i - C_k||^2
+      + squaredNormCk(k)
+      - 2.0 * sum(DenseVector.tabulate[Double](nObsLearning)(i => param(i, k) * kernel(obs, learnObs(i)))))
+      
+    return argmin(dk)
   }
   
   def mStep(initialState: ComputationState): ComputationState = {
