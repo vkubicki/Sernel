@@ -2,7 +2,7 @@ package p03twosampletest
 
 import breeze.linalg._
 import p00rkhs.{Gram, Kernel}
-import p04Various.Def
+import p04various.Def
 import scala.util.Random
 
 /**

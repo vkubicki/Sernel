@@ -38,7 +38,7 @@ object Gram {
         DenseVector[Double](3.0, 4.0),
         DenseVector[Double](5.0, 6.0))
         
-    val gram = generate(obs, Kernel.linear)
+    val gram = generate(obs, Kernel.Rn.linear)
     
     println(gram)
   }

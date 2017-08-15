@@ -3,7 +3,7 @@ package p02kmeans
 import breeze.linalg._
 import p00rkhs.{Gram, Kernel}
 import p02kmeans.Base.ComputationState
-import p04Various.Iterate
+import p04various.Iterate
 
 object SimpleExample {
   def main {
@@ -25,7 +25,7 @@ object SimpleExample {
       paramGenerator,
       nObs)
       
-    val gram = Gram.generate(data.data, Kernel.linear) // compute Gram matrix
+    val gram = Gram.generate(data.data, Kernel.Rn.linear) // compute Gram matrix
     val param = Base.init(nObs, nClass) // initialize the algorithm by selecting a representative element per class and setting the class centers using them
     val zeroCompState = new ComputationState(
         0,
@@ -47,9 +47,9 @@ object SimpleExample {
   
   /**
    * It would be possible to provide an immutable implementation of this function. But it would be cumbersome and
-   * would run in log(n). One possible implementation would use a scala Vector which is updated un a fold for example.
+   * would run in log(n). One possible implementation would use a scala Vector which is updated in a fold for example.
    * 
-   * I use a for loop because a DenseVector does not provide the zip method (unlike an Array for example. */
+   * I use a for loop because a DenseVector does not provide the zip method (unlike an Array for example). */
   def computeMatConf(
       nClass: Int,
       realClass: DenseVector[Int],

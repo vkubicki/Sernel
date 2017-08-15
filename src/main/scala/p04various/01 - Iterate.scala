@@ -1,4 +1,4 @@
-package p04Various
+package p04various
 
 import scala.annotation.tailrec
 
