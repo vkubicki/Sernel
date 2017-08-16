@@ -41,7 +41,8 @@ object Base {
     val squaredNormCk = initialState
       .param(::, *)
       .map(c => Gram.scalarProduct(initialState.gram, c, c)) // compute the norm of each center of class (each column of param) as it is a term used multiple times in the computation of the distance
-    
+      .t
+      
     val dik = DenseMatrix.tabulate[Double](nObs, nClass)(
         (i, k) => initialState.gram(i, i) // element {i, k} of dik is ||K_x_i - C_k||^2
         + squaredNormCk(k)

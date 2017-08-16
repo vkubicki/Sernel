@@ -7,13 +7,15 @@ import p04various.Iterate
 
 object SimpleExample {
   def main {
+    val kernel: (DenseVector[Double], DenseVector[Double]) => Double = Kernel.Rn.linear
+    
     val proportion = DenseVector[Double](0.3, 0.7)
-    val paramGenerator = Array(
+    val paramGenerator = Array( // paramGenerator(j)(k)
         Array(
-            new Data.GaussianClassParam(0.0, 1.0),
-            new Data.GaussianClassParam(10.0, 1.0)),
+            new Data.GaussianClassParam(-10.0, 1.0),
+            new Data.GaussianClassParam(0.0, 1.0)),
         Array(
-            new Data.GaussianClassParam(0.0, 1.0),
+            new Data.GaussianClassParam(-10.0, 1.0),
             new Data.GaussianClassParam(10.0, 1.0)))
     val nObs = 100
     val nClass = 2
@@ -25,7 +27,7 @@ object SimpleExample {
       paramGenerator,
       nObs)
       
-    val gram = Gram.generate(data.data, Kernel.Rn.linear) // compute Gram matrix
+    val gram = Gram.generate(data.data, kernel) // compute Gram matrix
     val param = Base.init(nObs, nClass) // initialize the algorithm by selecting a representative element per class and setting the class centers using them
     val zeroCompState = new ComputationState(
         0,
@@ -43,6 +45,10 @@ object SimpleExample {
     val matConf = computeMatConf(nClass, data.zi, ziComputed)
     
     println(matConf)
+    
+    val lim = new Plot.plotLim(-10.0, 10.0, -10.0, 10.0, 100, 100)
+    Plot.plotIn(lim, data)
+    Plot.plotRes(lim, kernel, gram, param, data.data)
   }
   
   /**
