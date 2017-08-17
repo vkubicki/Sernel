@@ -2,14 +2,16 @@ Why Scala - Vincent KUBICKI - 2017
 
 # Abstract
 
-This document summarizes the experience of doing numerical computations in Scala. It is based on my experience coding this library. I will not include external resources or researches. Coming from a math / physics background and not a CS background, I lack a complete picture of the type system, category theory and such. This is really a description of Scala applied to non trivial statistical computations.
+This document summarizes my personal experience of doing some simple numerical computations in Scala. Coming from a math / physics background and not a CS background, I lack a more complete picture of the type system, category theory and such. This is really a description of Scala applied to the statistical computations presented in this package.
 
 # Pro
 
 ## Libraries
 
-- Breeze provides linear algebra, probabilities and vizualization
+- Breeze provides linear algebra, probabilities and very basic visualization
 - The combination of functional programming and the fact that Spark is written in Scala might ease porting the code to Spark.
+- The smile library for machine learning seems quite mature, if more high level statistical functions are needed
+   - visualization capabilities seem acceptable: http://haifengl.github.io/smile/visualization.html
 
 ## Functional Programming
 
@@ -22,6 +24,7 @@ This document summarizes the experience of doing numerical computations in Scala
 - Hierarchical package system (vs flat file structures in an R package)
 - Using constructs like map and reduce make the algorithm easy to scale using Spark for example.
 - Strong typing allows to avoid errors like using the entire vector instead of a particular vector element.
+- Inversion of Control is systematic, as a lot of behaviour can be passed as argument
 
 ## Other
 
@@ -36,4 +39,3 @@ This document summarizes the experience of doing numerical computations in Scala
 
 - Less people are trained in Scala than in Python or R.
    - But Scala is concise and easy to learn once the basic concepts are understood.
-   - Less specialized packages than in Python or R

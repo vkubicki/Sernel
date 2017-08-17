@@ -79,7 +79,7 @@ object Base {
     val nObsLearning = param.rows
     
     val dk = DenseVector.tabulate[Double](nClass)(k =>
-      math.pow(kernel(obs, obs), 2) // element {i, k} of dik is ||K_x_i - C_k||^2
+      kernel(obs, obs) // element {i, k} of dik is ||K_x_i - C_k||^2
       + squaredNormCk(k)
       - 2.0 * sum(DenseVector.tabulate[Double](nObsLearning)(i => param(i, k) * kernel(obs, learnObs(i)))))
       

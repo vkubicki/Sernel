@@ -8,15 +8,16 @@ import p04various.Iterate
 object SimpleExample {
   def main {
     val kernel: (DenseVector[Double], DenseVector[Double]) => Double = Kernel.Rn.linear
+    val sd = 10.0
     
     val proportion = DenseVector[Double](0.3, 0.7)
     val paramGenerator = Array( // paramGenerator(j)(k)
         Array(
-            new Data.GaussianClassParam(-10.0, 1.0),
-            new Data.GaussianClassParam(0.0, 1.0)),
+            new Data.GaussianClassParam(-10.0, sd),
+            new Data.GaussianClassParam(10.0, sd)),
         Array(
-            new Data.GaussianClassParam(-10.0, 1.0),
-            new Data.GaussianClassParam(10.0, 1.0)))
+            new Data.GaussianClassParam(-10.0, sd),
+            new Data.GaussianClassParam(10.0, sd)))
     val nObs = 100
     val nClass = 2
     
