@@ -10,8 +10,8 @@ import breeze.linalg._
  */
 object Kernel {
   object R {
-	  def product(x: Double, y: Double): Double = x * y
-	  def gaussian(x: Double, y: Double, sd: Double): Double = math.exp(- math.pow(x - y, 2) / (2 * math.pow(sd, 2)))
+    def product(x: Double, y: Double): Double = x * y
+    def gaussian(x: Double, y: Double, sd: Double): Double = math.exp(-math.pow(x - y, 2) / (2 * math.pow(sd, 2)))
   }
 
   object Rn {

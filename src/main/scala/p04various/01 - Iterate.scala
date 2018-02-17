@@ -10,8 +10,7 @@ object Iterate {
    */
   @tailrec
   def iterate[A](
-      a: A,
-      f: A => A,
-      condition: A => Boolean)
-  : A = if (condition(a)) a else iterate(f(a), f, condition)
+    a: A,
+    f: A => A,
+    condition: A => Boolean): A = if (condition(a)) a else iterate(f(a), f, condition)
 }
