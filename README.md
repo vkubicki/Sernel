@@ -2,6 +2,8 @@
 
 Kernel methods in Scala, to learn, at the moment. The current objective is to find the best way to factorize as much code as possible among the various methods that use RKHS.
 
+Sernel is Copyright (c) 2020 Vincent KUBICKI and distributed as a BSD 3-Clause License
+
 # How to use
 
 The easiest way to start is to use Eclipse:
